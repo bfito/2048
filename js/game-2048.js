@@ -1,25 +1,30 @@
-function Game2048 () {
-  this.score = 0;
-  this.board = [
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
-    [null, null, null, null],
+function Game2048() {
+  this.score = 0; //because all the score of the game start at 0
+  this.board = [ // is a 4X4 array //every board will start enty for every one
+    [ null, null, null, null ],
+    [ null, null, null, null ],
+    [ null, null, null, null ],
+    [ null, null, null, null ],
   ];
-this.hasWon = false;
-this.hasLost = false;
+
+  this.hasWon = false;
+  this.hasLost = false;
+  this._generateTile();//this will generate a random tile with val 2 or 4
+  this._generateTile();//this will generate a random tile with val 2 or 4
 }
 
-Game2048.prototype._generateTile = function () {
+// marlonGame = new Game2048(); here im checking and creating a new game
+
+Game2048.prototype._generateTile  = function () {
   var tileValue;
-  if (math.random() < 0.8) {
-  tileValue = 2;
-} else {
-  tileValue = 4;
-}
 
-  var emptyTile = this._getAvailablePosition();
+  if (Math.random() < 0.8) {
+    tileValue = 2;
+  } else {
+    tileValue = 4;
+  }
 
+  var emptyTile = this._getAvaiblePosition();
   if (emptyTile !== null) {
     var row = emptyTile.x;
     var col = emptyTile.y;
@@ -27,27 +32,41 @@ Game2048.prototype._generateTile = function () {
   }
 };
 
-Game2048.prototype._getAvailablePosition = function () {
-  var emptyTiles = [];
+Game2048.prototype._getAvaiblePosition = function () {
+  var emptyTile = [];//it will be the empty arrays
 
-  this.board.forEach(function(row, rowIndex) {
-    row.forEach(function (cell, colIndex) {
-        if (cell === null) {
-          emptyTiles.push({ x: rowIndex, y: colIndex});
-        }
+  this.board.forEach(function (row, rowIndex) { // it will loop for the array index (when doing a 2d array got get the val is this way only)
+    row.forEach(function (cell, colIndex) { // this will loop for each index inside the row(when doing a 2d array got get the val is this way only)
+      if(cell === null) { //for each row check if everty cell is empty ***
+        emptyTile.push({ x: rowIndex, y: colIndex});
+      }
     });
   });
 
-  if (emptyTiles.length === 0) {
+  if (emptyTile.length === 0) {
     return null;
   }
 
-  var randomIndex = Math.random(Math.random() * 10) * emptyTiles.length;
-  return emptyTiles[randomIndex];
+  var randomIndex = Math.floor(Math.random() * emptyTile.length);
+  return emptyTile[randomIndex];
 };
 
-Game2048.prototype._renderBoard = function () {
-  this.board.forEach(function(row){
-    console.log(row);
+  Game2048.prototype._renderBoard = function () {
+    this.board.forEach(function (row) {
+      console.log(row);
+    });
+  };
+
+Game2048.prototype.moveLeft = function () {
+  this.board.forEach(function (row) {
+    // 1. Remove empties from row
+    var newRow = [];
+
+    row.forEach(function (cell) {
+      if (cell !== null) {
+        newRow.push(cell);
+      }
+    });
+    // 2. Merge tiles in row that are together
   });
 };
