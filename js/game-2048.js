@@ -57,16 +57,19 @@ Game2048.prototype._getAvaiblePosition = function () {
     });
   };
 
+  // **********
+  // MOVE LEFT
+  // **********
 Game2048.prototype.moveLeft = function () {
-    var updatedBoard = [];
-
+  var updatedBoard = [];
   this.board.forEach(function (row) {
     // 1. Remove empties from row
     var newRow = [];
-
+      console.log(newRow);
     row.forEach(function (cell) {
       if (cell !== null) {
         newRow.push(cell);
+              // console.log(cell);
       }
     });
     // 2. Merge tiles in row that are together and have the same number
@@ -74,21 +77,61 @@ Game2048.prototype.moveLeft = function () {
       if (newRow[i] === newRow[i + 1]) {
         newRow[i] *= 2;
         newRow[i + 1] = null;
+            // console.log(row);
       }
     }
     // 3. Remove new empties in the middle
     // e.g. [8, 8, 4] -> [16, null, 4]
     var moved = [];
-
     newRow.forEach(function (cell) {
       if (cell !== null) {
         moved.push(cell);
       }
     });
-
     // 4. push() nulls until row has length
     while (moved.length < 4) {
       moved.push(null);
+    }
+    updatedBoard.push(moved);
+  });
+  this.board = updatedBoard;
+};
+
+// **********
+// MOVE RIGHT
+// **********
+Game2048.prototype.moveRight = function () {
+  var updatedBoard = [];
+
+  this.board.forEach(function (row) {
+    // 1. Remove empties from row
+    var newRow = [];
+      // console.log(newRow);
+    row.forEach(function (cell) {
+      if (cell !== null) {
+        newRow.push(cell);
+              // console.log(cell);
+      }
+    });
+    // 2. Merge tiles in row that are together and have the same number
+    for (var i = (newRow.length - 1); i >= 0; i -= 1) {
+      if (newRow[i] === newRow[i - 1]) {
+        newRow[i] *= 2;
+        newRow[i - 1] = null;
+            // console.log(row);
+      }
+    }
+    // 3. Remove new empties in the middle
+    // e.g. [8, 8, 4] -> [16, null, 4]
+    var moved = [];
+    newRow.forEach(function (cell) {
+      if (cell !== null) {
+        moved.push(cell);
+      }
+    });
+    // 4. push() nulls until row has length
+    while (moved.length < 4) {
+      moved.unshift(null);
     }
     updatedBoard.push(moved);
   });
