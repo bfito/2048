@@ -1,4 +1,4 @@
-console.log('app.js');
+// console.log('Hello!');
 
 // 1. create game object
 var myGlobalGame;
@@ -47,6 +47,29 @@ function moveGame (ev) {
 
   // 5. updating the screen based on new board state
   renderTiles();
+  updateScore();
+
+  // 6. win or lose
+  checkIfDone();
+}
+
+
+function updateScore () {
+  $('#score-display').html(myGlobalGame.score);
+}
+
+function checkIfDone () {
+  if (myGlobalGame.hasWon) {
+    $('#game-board').remove();
+    var winnerHtml = '<img src="https://www.reddit.com/r/gifs/comments/47f9oa/bill_gates_attempts_the_dab/" alt="Winner">';
+    $('#container').append(winnerHtml);
+  }
+
+  else if (myGlobalGame.hasLost) {
+    $('#game-board').remove();
+    var loserHtml = '<img src="http://i1191.photobucket.com/albums/z474/veronicaandbetty/youlose.gif" alt="Loser">';
+    $('#container').append(loserHtml);
+  }
 }
 
 
@@ -65,6 +88,3 @@ function renderTiles () {
     });
   });
 }
-
-
-// 6. win or lose (maybe)
