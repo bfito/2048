@@ -193,6 +193,8 @@ Game2048.prototype.moveDown = function () {
 
 
 Game2048.prototype.move = function (direction) {
+  ion.sound.play('snap');
+
   if (this.hasWon || this.hasLost) {
     return;
   }
@@ -221,9 +223,12 @@ Game2048.prototype.move = function (direction) {
 
 
 Game2048.prototype._updateScore = function (points) {
+    ion.sound.play('tap');
   this.score += points;
 
-  if (points === 2048) {
+  // if (points === 2048) {
+  if (points === 16) {
+
     this.hasWon = true;
   }
 };

@@ -11,6 +11,8 @@ $(document).ready(function () {
 
   // 3. handle keyboard events
   $(document).keydown(moveGame);
+
+  loadSouds();
 });
 
 
@@ -61,8 +63,9 @@ function updateScore () {
 function checkIfDone () {
   if (myGlobalGame.hasWon) {
     $('#game-board').remove();
-    var winnerHtml = '<img src="https://www.reddit.com/r/gifs/comments/47f9oa/bill_gates_attempts_the_dab/" alt="Winner">';
+    var winnerHtml = '<img src="https://media.giphy.com/media/3oz8xPyx3qgq5jAmMo/giphy.gif" alt="Winner">';
     $('#container').append(winnerHtml);
+
   }
 
   else if (myGlobalGame.hasLost) {
@@ -86,5 +89,14 @@ function renderTiles () {
       var tileHtml = '<div class="tile tile-position-' + rowIndex + '-' + colIndex + ' val-' + cell + '"> ' + cell + ' </div>';
       $('#tile-container').append(tileHtml);
     });
+  });
+}
+
+function loadSouds () {
+  ion.sound({
+    sounds: [ {name: 'snap'}, {name: 'tap'}, {name: 'beer_can_opener'},],
+    path: 'lib/ion-sound/sounds/',
+    preload: true,
+    volume: 1.0,
   });
 }
